@@ -19,13 +19,16 @@ import { gsap } from 'gsap'
 //     width: 400
 // })
 
+//Button interaction
+
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
 scene.background =  new THREE.Color( 0Xcbbed0 )
-scene.fog = new THREE.Fog(0Xcbbed0, 60, 100);
+// scene.fog = new THREE.Fog(0Xcbbed0, 60, 100);
 
 /**
  * Overlay
@@ -63,8 +66,6 @@ var target = new THREE.Vector3()
 var mouseX = 0, mouseY = 0
 var windowHalfX = window.innerWidth / 2
 var windowHalfY = window.innerHeight / 2
-
-
 
 
 /**
@@ -218,20 +219,33 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+    window.addEventListener('resize', () =>
+    {
 
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
+        if(window.innerWidth != sizes.width || window.innerHeight != sizes.height){
+
+
+           
+            // Update sizes
+            sizes.width = window.innerWidth
+            sizes.height = window.innerHeight
+            
+
+            // Update camera
+            camera.aspect = sizes.width / sizes.height
+            camera.updateProjectionMatrix()
+
+            // Update renderer
+            renderer.setSize(sizes.width, sizes.height)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+            
+        }
+    
+    })
+
+
+
 
 /**
  * Camera
