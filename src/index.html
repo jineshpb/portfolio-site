@@ -5,10 +5,10 @@
     
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
     <title>Jinesh Bhaskaran</title>
     <script src="https://kit.fontawesome.com/c4ca88d5e8.js" crossorigin="anonymous"></script>
-    
+    <!-- <script src="/src/script.js"></script> -->
     <link rel="shortcut icon" type="image/png" href="/static/favicon-04.png">
 </head>
 <body>
@@ -34,13 +34,12 @@
                 <span class="logo-text text">Hey👋🏽, this is Jinesh</span>
                 <span class="logo-description text">I'm a user experience designer with Walmart</span>
                 <span class="logo-description text">I love experimeting with 3D, recently fell in love with Three.js. Checkout my works on Instagram and Behance</span>
-            </div>
-            <div class="user-close">
-                <i class="fa fa-solid fa-xmark toggle close"></i>
-                <i class="fa fa-solid fa-user toggle user"></i>
-            </div>
-            
+            </div>   
         </header>
+        <div class="user-close">
+            <!-- <i class="fa fa-solid fa-xmark toggle close"></i> -->
+            <i class="fa fa-solid fa-user toggle user"></i>
+        </div>
 
         <div class="nav-container-bar">
 
@@ -106,6 +105,21 @@
          console.log('clicked');
      })
      
+
+     /**
+     * Button interaction
+     */
+    let ProfileButton = document.querySelector('.user-close')
+    let ProfileButtonIcon = ProfileButton.querySelector('.fa-user')
+
+    toggle.onclick  = () => {
+        if(ProfileButtonIcon.classList.contains('fa-user')){
+            ProfileButtonIcon.classList.replace("fa-user", "fa-xmark")
+        }
+
+        else ProfileButtonIcon.classList.replace("fa-xmark","fa-user")
+    }
+
     </script> 
     
 </body>
