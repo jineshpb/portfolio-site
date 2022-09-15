@@ -27,8 +27,10 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-scene.background =  new THREE.Color( 0Xcbbed0 )
-// scene.fog = new THREE.Fog(0Xcbbed0, 60, 100);
+// scene.background =  new THREE.Color( 0Xcbbed0 )
+scene.background =  new THREE.Color( 0Xf6ebf1 )
+scene.fog = new THREE.Fog(0Xf6ebf1, 17, 27);
+
 
 /**
  * Overlay
@@ -241,6 +243,11 @@ const sizes = {
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
             
         }
+
+      
+
+
+
     
     })
 
