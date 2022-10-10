@@ -1,5 +1,7 @@
 import './style.css?'
 import * as dat from 'lil-gui'
+import { Pane } from 'tweakpane'
+
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -9,6 +11,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { SAOPass } from 'three/examples/jsm/postprocessing/SAOPass.js'
 import { DotScreenPass } from 'three/examples/jsm/postprocessing/DotScreenPass.js'
 import { gsap } from 'gsap'
+
+
 
 
 /**
@@ -30,6 +34,27 @@ const scene = new THREE.Scene()
 // scene.background =  new THREE.Color( 0Xcbbed0 )
 scene.background =  new THREE.Color( 0Xf6ebf1 )
 scene.fog = new THREE.Fog(0Xf6ebf1, 17, 27);
+
+/**
+ * Debug panel
+ */
+
+
+
+const pane = new Pane()
+pane.containerElem_.style.width = '320px'
+const deskLight = pane.addFolder({
+    title: 'intensity'
+});
+// deskLight.addInputs(Intensity, 'intensity');
+
+
+// const pane = new Pane({
+//     container: document.getElementById('someContainer'),
+//   });
+    
+
+
 
 
 /**
@@ -59,6 +84,35 @@ const overlayMaterial = new THREE.ShaderMaterial({
 })
 const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial)
 scene.add(overlay)
+
+// const steamMaterial = new THREE.ShaderMaterial({
+//     wireframe: true,
+//     vertexShader:`
+//         varying vec2 vUv;
+
+//         void main()
+//         {
+//             vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+//             vec4 viewPosition = viewMatrix * modelPosition;
+//             vec4 projectionPosition = projectionMatrix * viewPosition;
+//             gl_Position = projectionPosition;
+
+//             vUv = uv;
+//         }
+//     `,
+//     fragmentShader: `
+
+//         varying vec2 vUv;
+
+//         #pragma glslify: perlin2d = require('../shaders/partials/perlin2d.glsl')
+
+//         void main()
+//         {
+//             float perlin = perlin2d();
+//             gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+//         }
+//     `
+// })
 
 //animation vatriable
 let mixer, roomModel
@@ -112,33 +166,33 @@ gltfLoader.setDRACOLoader(dracoLoader)
 /**
  * Textures
  */
-const bakedRoomWallsTexture = textureLoader.load('main_walls_bake.jpg')
+const bakedRoomWallsTexture = textureLoader.load('Room_structure.jpg')
 bakedRoomWallsTexture.flipY = false
 bakedRoomWallsTexture.encoding = THREE.sRGBEncoding
 
-const bakedRoomStructureTexture = textureLoader.load('room_structure_bake.jpg')
+const bakedRoomStructureTexture = textureLoader.load('Objects_in_the scene.jpg')
 bakedRoomStructureTexture.flipY = false
 bakedRoomStructureTexture.encoding = THREE.sRGBEncoding
 
-const bakedRoomObjectsTexture = textureLoader.load('object_in_the_scene_bake.jpg')
-bakedRoomObjectsTexture.flipY = false
-bakedRoomObjectsTexture.encoding = THREE.sRGBEncoding
+// const bakedRoomObjectsTexture = textureLoader.load('object_in_the_scene_bake.jpg')
+// bakedRoomObjectsTexture.flipY = false
+// bakedRoomObjectsTexture.encoding = THREE.sRGBEncoding
 
-const bakedFootballTexture = textureLoader.load('football-bake.jpg')
-bakedFootballTexture.flipY = false
-bakedFootballTexture.encoding = THREE.sRGBEncoding
+// const bakedFootballTexture = textureLoader.load('football-bake.jpg')
+// bakedFootballTexture.flipY = false
+// bakedFootballTexture.encoding = THREE.sRGBEncoding
 
-const bakedSquareTexture = textureLoader.load('square-frame-bake.jpg')
-bakedSquareTexture.flipY = false
-bakedSquareTexture.encoding = THREE.sRGBEncoding
+// const bakedSquareTexture = textureLoader.load('square-frame-bake.jpg')
+// bakedSquareTexture.flipY = false
+// bakedSquareTexture.encoding = THREE.sRGBEncoding
 
 const bakedTelescopeTexture = textureLoader.load('scope-bake.jpg')
 bakedTelescopeTexture.flipY = false
 bakedTelescopeTexture.encoding = THREE.sRGBEncoding
 
-const bakedPlantTexture = textureLoader.load('plant.jpg')
-bakedPlantTexture.flipY = false
-bakedPlantTexture.encoding = THREE.sRGBEncoding
+// const bakedPlantTexture = textureLoader.load('plant.jpg')
+// bakedPlantTexture.flipY = false
+// bakedPlantTexture.encoding = THREE.sRGBEncoding
 
 
 /**
@@ -146,20 +200,26 @@ bakedPlantTexture.encoding = THREE.sRGBEncoding
  */
 //Baked material
 const bakedMaterialRoomStructure = new THREE.MeshBasicMaterial({ map: bakedRoomStructureTexture })
-const bakedMaterialRoomObjects = new THREE.MeshBasicMaterial({ map: bakedRoomObjectsTexture })
 const bakedMaterialRoomWalls = new THREE.MeshBasicMaterial({ map: bakedRoomWallsTexture })
-const bakedMaterialFootball = new THREE.MeshBasicMaterial({ map: bakedFootballTexture })
-const materialText = new THREE.MeshBasicMaterial({ color: 0xffffff })
-const bakedMaterialSquare = new THREE.MeshBasicMaterial({ map: bakedSquareTexture })
+const materialText = new THREE.MeshBasicMaterial({ color: 0xFFFDD0 })
 const bakedMaterialTelescope = new THREE.MeshBasicMaterial({ map: bakedTelescopeTexture })
-const bakedMaterialPlant = new THREE.MeshBasicMaterial({ map: bakedPlantTexture })
+
+
+
+
+// const bakedMaterialRoomObjects = new THREE.MeshBasicMaterial({ map: bakedRoomObjectsTexture })
+
+// const bakedMaterialFootball = new THREE.MeshBasicMaterial({ map: bakedFootballTexture })
+// const bakedMaterialSquare = new THREE.MeshBasicMaterial({ map: bakedSquareTexture })
+// const bakedMaterialPlant = new THREE.MeshBasicMaterial({ map: bakedPlantTexture })
 
 
 /**
  * Scene room
  */
+
 gltfLoader.load(
-    'workspace_scene_anim.glb',
+    'workspace_attempt_3_011.glb',
     (gltf) =>
     {
         // gltf.scene.traverse((child) =>
@@ -167,32 +227,43 @@ gltfLoader.load(
         // })
 
         roomModel = gltf.scene
-        // console.log(roomModel);
-
-        const roomWallMesh = gltf.scene.children.find(child => child.name === 'room-walls')
+        
+        
+        const roomWallMesh = gltf.scene.children.find(child => child.name === 'room-contents')
         const roomStructureMesh = gltf.scene.children.find(child => child.name === 'room-structure')
-        const roomObjectsMesh = gltf.scene.children.find(child => child.name === 'objects-in-the-scene')
-        const roomObjectsFootballMesh = gltf.scene.children.find(child => child.name === 'football')
-        const roomObjectsTextMesh = gltf.scene.children.find(child => child.name === 'Text')
-        const roomObjectsSquareMesh = gltf.scene.children.find(child => child.name === 'cube-frame')
-
-        // console.log(roomModel);
+        const chairMesh = gltf.scene.children.find(child => child.name === 'Chair_top')
+        const roomObjectsTextMesh = gltf.scene.children.find(child => child.name === 'wall_text')
+        const plantMesh = gltf.scene.children.find(child => child.name === 'Plant_tall')
+        const steamMesh = gltf.scene.children.find(child => child.name === 'Coffee_steam')
         telescopeObject = gltf.scene.children.find(child => child.name === 'telescope-scope')
+
+       
+
+        // const roomStructureMesh = gltf.scene.children.find(child => child.name === 'room-structure')
+        // const roomObjectsMesh = gltf.scene.children.find(child => child.name === 'objects-in-the-scene')
+        // const roomObjectsFootballMesh = gltf.scene.children.find(child => child.name === 'football')
+        // const roomObjectsSquareMesh = gltf.scene.children.find(child => child.name === 'cube-frame')
+
+        console.log(steamMesh)
 
         
  
 
-        roomObjectsMesh.material = bakedMaterialRoomObjects
-        roomWallMesh.material = bakedMaterialRoomWalls
-        roomStructureMesh.material = bakedMaterialRoomStructure
-        roomObjectsFootballMesh.material = bakedMaterialFootball
+        // roomObjectsMesh.material = bakedMaterialRoomObjects
+        roomWallMesh.material = bakedMaterialRoomStructure
+        chairMesh.material = bakedMaterialRoomStructure
+        plantMesh.material = bakedMaterialRoomStructure
+        roomStructureMesh.material = bakedMaterialRoomWalls
         roomObjectsTextMesh.material = materialText
-        roomObjectsSquareMesh.material = bakedMaterialSquare
+        // roomObjectsFootballMesh.material = bakedMaterialFootball
+        // roomObjectsSquareMesh.material = bakedMaterialSquare
         telescopeObject.material = bakedMaterialTelescope
 
-        roomModel.getObjectByName("plant_3").material = bakedMaterialPlant
-        roomModel.getObjectByName("plant_2").material = bakedMaterialPlant
-        roomModel.getObjectByName("plant_1").material = bakedMaterialPlant
+        // steamMesh.material = steamMaterial
+
+        // roomModel.getObjectByName("plant_3").material = bakedMaterialPlant
+        // roomModel.getObjectByName("plant_2").material = bakedMaterialPlant
+        // roomModel.getObjectByName("plant_1").material = bakedMaterialPlant
 
         scene.add(gltf.scene)
 
@@ -259,9 +330,9 @@ const sizes = {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 25
-camera.position.y = 5
-camera.position.z = -25
+camera.position.x = 200
+camera.position.y = 100
+camera.position.z = -200
 scene.add(camera)
 
 // Controls
@@ -269,10 +340,10 @@ const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 controls.dampingFactor = .03
 
-controls.target.set(0, 3, 0)
+controls.target.set(0, 3, -2)
 
 controls.minDistance = 13
-controls.maxDistance = 15
+controls.maxDistance = 16
 
 controls.minPolarAngle = 0
 controls.maxPolarAngle = Math.PI /2
@@ -419,7 +490,7 @@ const tick = () =>
 
 tick()
 
-//additional fucntions
+//mouse tracker function
 
 function getMouseDegrees(x, y, degreeLimit) {
     let dx = 0,
